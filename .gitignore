@@ -60,3 +60,10 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+#vim backup files
+*.sw[po]
+
+#db related files
+db.sqlite3
+migrations/

@@ -1,0 +1,10 @@
+Django==1.9.4
+requests
+Pillow
+bs4
+celery[redis]
+honcho
+python-social-auth
+djangorestframework
+markdown
+django-filter
