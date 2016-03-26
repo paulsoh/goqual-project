@@ -12,4 +12,6 @@ class VideoAdmin(admin.ModelAdmin):
        'url',
        'thumbnail',
        'source',
+       'created_at',
+       'updated_at',
     )
