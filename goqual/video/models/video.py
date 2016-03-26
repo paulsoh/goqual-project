@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 
 class Video(models.Model):
@@ -48,6 +49,14 @@ class Video(models.Model):
     def save(self, *args, **kwargs):
         self.source_id = self.get_source_id()
         super(Video, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse(
+                "video",
+                kwargs={
+                    'pk': self.id,
+                }
+        )
 
     def get_source_id(self):
         """

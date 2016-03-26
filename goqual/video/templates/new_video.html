@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    
+    <h1>Add you own video</h1>
+    
+    <div class="video_create">
+        <form action="" method="post">
+            {% csrf_token %}
+            <input class="text" type="text" name="title">
+            <input class="text" type="text" name="url">
+            <textarea name="content"></textarea>
+            <select name="source">
+                <option value="YOUTUBE">Youtube</option>
+                <option value="VIMEO">Vimeo</option>
+            </select>
+            <input name="add video" value="" type="submit" class="submit">
+            
+        </form>
+    </div>
+    
+{% endblock %}
