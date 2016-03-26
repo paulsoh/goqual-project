@@ -40,6 +40,9 @@ INSTALLED_APPS = [
 
     'debug_toolbar',
     'django_extensions',
+
+    'goqual',
+    'video',
 ]
 
 MIDDLEWARE_CLASSES = [

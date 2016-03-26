@@ -20,16 +20,27 @@ class Video(models.Model):
     )
 
     SOURCE_CHOICES = (
-        ('YOUTUBE','YOUTUBE'),
-        ('VIMEO','VIMEO'),
+        ('YOUTUBE', 'YOUTUBE'),
+        ('VIMEO', 'VIMEO'),
     )
-    
+
     source = models.CharField(
-        max_length=1,
+        max_length=7,
         choices=SOURCE_CHOICES,
         blank=True,
         null=True,
     )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+
+    def __str__(self):
+        return self.title
 
     def verify_link(self):
         """
@@ -37,4 +48,10 @@ class Video(models.Model):
         """
         pass
 
-    
+    def get_absolute_url(self):
+        return reverse(
+            "video",
+            kwargs={
+                "pk": self.id,
+            }
+        )
