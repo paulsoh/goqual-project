@@ -13,7 +13,7 @@ class Video(models.Model):
         blank=True,
         null=True,
     )
-    
+
     source_id = models.CharField(
         max_length=20,
         blank=True,
@@ -29,7 +29,7 @@ class Video(models.Model):
         ('YOUTUBE', 'YOUTUBE'),
         ('VIMEO', 'VIMEO'),
     )
-    
+
     source = models.CharField(
         max_length=7,
         choices=SOURCE_CHOICES,
@@ -44,7 +44,7 @@ class Video(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True,
     )
-    
+
     def save(self, *args, **kwargs):
         self.source_id = self.get_source_id()
         super(Video, self).save(*args, **kwargs)
@@ -64,5 +64,3 @@ class Video(models.Model):
         Verify video_url and check if response is 200
         """
         pass
-
-    
