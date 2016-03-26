@@ -1,2 +1,1 @@
 from .detail import VideoDetailView
-
