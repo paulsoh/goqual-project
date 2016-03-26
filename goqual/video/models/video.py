@@ -13,6 +13,12 @@ class Video(models.Model):
         blank=True,
         null=True,
     )
+    
+    source_id = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+    )
 
     thumbnail = models.ImageField(
         blank=True,
@@ -23,7 +29,7 @@ class Video(models.Model):
         ('YOUTUBE', 'YOUTUBE'),
         ('VIMEO', 'VIMEO'),
     )
-
+    
     source = models.CharField(
         max_length=7,
         choices=SOURCE_CHOICES,
@@ -38,9 +44,20 @@ class Video(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True,
     )
+    
+    def save(self, *args, **kwargs):
+        self.source_id = self.get_source_id()
+        super(Video, self).save(*args, **kwargs)
 
-    def __str__(self):
-        return self.title
+    def get_source_id(self):
+        """
+        Get video id from original source
+        Currently only implemented for youtube
+        """
+        import re
+        reg_exp = "^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*"
+        match = re.search(reg_exp, self.url)
+        return match.group(2)
 
     def verify_link(self):
         """
@@ -48,10 +65,4 @@ class Video(models.Model):
         """
         pass
 
-    def get_absolute_url(self):
-        return reverse(
-            "video",
-            kwargs={
-                "pk": self.id,
-            }
-        )
+    
