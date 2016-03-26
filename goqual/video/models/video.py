@@ -14,6 +14,12 @@ class Video(models.Model):
         null=True,
     )
 
+    source_id = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+    )
+
     thumbnail = models.ImageField(
         blank=True,
         null=True,
@@ -39,19 +45,22 @@ class Video(models.Model):
         auto_now=True,
     )
 
-    def __str__(self):
-        return self.title
+    def save(self, *args, **kwargs):
+        self.source_id = self.get_source_id()
+        super(Video, self).save(*args, **kwargs)
+
+    def get_source_id(self):
+        """
+        Get video id from original source
+        Currently only implemented for youtube
+        """
+        import re
+        reg_exp = "^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*"
+        match = re.search(reg_exp, self.url)
+        return match.group(2)
 
     def verify_link(self):
         """
         Verify video_url and check if response is 200
         """
         pass
-
-    def get_absolute_url(self):
-        return reverse(
-            "video",
-            kwargs={
-                "pk": self.id,
-            }
-        )
